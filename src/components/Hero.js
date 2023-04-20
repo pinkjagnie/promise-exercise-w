@@ -35,6 +35,7 @@ const Hero = () => {
         </div>
       </div>
     </section>
+    {!drawJoke && <p className="w-[60%] mx-auto pt-20 text-center text-lg font-medium">To see a joke, you have to draw it first! Click the button above</p>}
     {drawJoke && <SingleJoke joke={drawJoke} />}
     </>
   )
