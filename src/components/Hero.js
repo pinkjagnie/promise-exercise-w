@@ -7,17 +7,21 @@ import SingleJoke from "./SingleJoke";
 
 const Hero = () => {
   const [drawJoke, setDrawJoke] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
 
-  const jokesHandler = () => {
-    fetch('https://api.chucknorris.io/jokes/random', {
-      headers: {
-      'Content-Type': 'application/json',
-     },
-    }).then(response => response.json())
-    .then(data => {
-      // console.log(data.value);
-      setDrawJoke(data.value)
-    });
+  const jokesHandler = async() => {
+    
+    const response = await fetch('https://api.chucknorris.io/jokes/random');
+    const resSingleJoke = await response.json();
+
+    // console.log(resSingleJoke)
+    setDrawJoke(resSingleJoke.value)
+    // console.log(resSingleJoke.value)
+   
+    if (resSingleJoke.error) {
+      setErrorMsg('Ups, something went wrong! Please try again')
+    }
+    
   };
 
   return(
@@ -35,7 +39,8 @@ const Hero = () => {
         </div>
       </div>
     </section>
-    {!drawJoke && <p className="w-[60%] mx-auto pt-20 text-center text-lg font-medium">To see a joke, you have to draw it first! Click the button above</p>}
+    {!drawJoke && <p className="w-[60%] mx-auto pt-20 text-center text-lg font-medium text-rose-900">{errorMsg}</p>}
+    {!drawJoke && !errorMsg && <p className="w-[60%] mx-auto pt-20 text-center text-lg font-medium">To see a joke, you have to draw it first! Click the button above</p>}
     {drawJoke && <SingleJoke joke={drawJoke} />}
     </>
   )
