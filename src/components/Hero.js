@@ -18,7 +18,9 @@ const Hero = () => {
     setDrawJoke(resSingleJoke.value)
     // console.log(resSingleJoke.value)
    
-    if (resSingleJoke.error) {
+    if (!resSingleJoke.error) {
+      setDrawJoke(resSingleJoke.value)
+    } else {
       setErrorMsg('Ups, something went wrong! Please try again')
     }
     
